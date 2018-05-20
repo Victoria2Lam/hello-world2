@@ -1,0 +1,36 @@
+import sys
+from com.ibm.ws.scripting import ScriptingException
+from com.ibm.websphere.management.cmdframework import CommandValidationException
+#
+#  IBM
+#  Development Support Team -- WebSphere Admin Scripts for UrbanCode Deploy 
+#  Copyright IBM Corp. 2013
+#   
+#  @Author Andrea C. Martinez (acm@us.ibm.com)
+#
+
+# invoke this script like this:
+# /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/wsadmin.sh -lang jython -f /devops/common/scripts/wsadmin-createJ2Cauthentication.jython <alias> <username> <password> <description>
+
+#check if correct number of command line parameters
+if (len(sys.argv) != 4): 
+  print "Incorrect number of command line parameters."
+  print "Usage: wsadmin-createJ2Cauthentication.jython <alias> <username> <password> <description>"
+else:
+  alias = sys.argv[0]
+  user = sys.argv[1]
+  password = sys.argv[2]
+  description = sys.argv[3]
+
+try:
+  #build string to pass to AdminTask command
+  j2cParams = "[-alias \"" + alias + "\" -user " + user + " -password " + password + " -description \""+ description + "\" ]"
+  #build string parameter to create session
+  AdminTask.createAuthDataEntry(j2cParams)
+  print "Created J2C Authentication credentials: " + alias + "\n"
+except ScriptingException:
+  print "Error:\n"+str(sys.exc_info()[1]) + "\n"
+  print "UNSUCCESFFUL attempt to create J2C Authentication credentials"
+else:
+  #save settings
+  AdminConfig.save()

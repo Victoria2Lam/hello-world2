@@ -1,0 +1,42 @@
+import sys
+from com.ibm.ws.scripting import ScriptingException
+#
+#  IBM
+#  Development Support Team -- WebSphere Admin Scripts for UrbanCode Deploy 
+#  Copyright IBM Corp. 2013
+#   
+#  @Author Andrea C. Martinez (acm@us.ibm.com)
+#
+
+# invoke this script like this:
+# /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/wsadmin.sh -lang jython -f /opt/udeploy/agent/var/work/IBMAccount/scripts/wsadmin-addSignerCertificate.jython <cell> <node> <alias> <key_file> <isBase64Encoded>
+
+
+#check if correct number of command line parameters
+if (len(sys.argv) != 5): 
+  print "Incorrect number of command line parameters."
+  print "Usage: wsadmin-addSignerCertificate.jython <cell> <node> <alias> <key_file> <isBase64Encoded>"
+else:
+  cell = sys.argv[0]
+  node = sys.argv[1]
+  alias = sys.argv[2]
+  key_file = sys.argv[3]
+  isBase64Encoded = sys.argv[4]
+  keyStoreName = "NodeDefaultTrustStore"
+
+if isBase64Encoded != "true":
+  isBase64Encoded = "false"
+
+try:
+  signerCertificateParams = "[-keyStoreName " + keyStoreName + " -keyStoreScope (cell):" + cell + ":(node):" + node + " -certificateFilePath " + key_file + " -base64Encoded " + isBase64Encoded + " -certificateAlias " + alias + " ]"
+  AdminTask.addSignerCertificate(signerCertificateParams)  
+except ScriptingException:
+  print "Error:\n"+str(sys.exc_info()[1]) + "\n"
+  print "UNSUCCESFFUL attempt to add Signer Certificate: " + alias
+else:
+  # save settings
+  AdminConfig.save()
+  
+  #restart WAS server
+  #AdminControl.stopServer('server1', node)
+  #AdminControl.startServer('server1', node)
