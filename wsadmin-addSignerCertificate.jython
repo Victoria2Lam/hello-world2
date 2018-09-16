@@ -1,12 +1,6 @@
 import sys
 from com.ibm.ws.scripting import ScriptingException
 #
-#  IBM
-#  Development Support Team -- WebSphere Admin Scripts for UrbanCode Deploy 
-#  Copyright IBM Corp. 2013
-#   
-#  @Author Andrea C. Martinez (acm@us.ibm.com)
-#
 
 # invoke this script like this:
 # /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/wsadmin.sh -lang jython -f /opt/udeploy/agent/var/work/IBMAccount/scripts/wsadmin-addSignerCertificate.jython <cell> <node> <alias> <key_file> <isBase64Encoded>
