@@ -2,12 +2,6 @@ import sys
 from com.ibm.ws.scripting import ScriptingException
 from com.ibm.websphere.management.cmdframework import CommandValidationException
 #
-#  IBM
-#  Development Support Team -- WebSphere Admin Scripts for UrbanCode Deploy 
-#  Copyright IBM Corp. 2013
-#   
-#  @Author Andrea C. Martinez (acm@us.ibm.com)
-#
 
 # invoke this script like this:
 # /opt/IBM/WebSphere/AppServer/profiles/AppSrv01/bin/wsadmin.sh -lang jython -f /devops/common/scripts/wsadmin-createJ2Cauthentication.jython <alias> <username> <password> <description>
